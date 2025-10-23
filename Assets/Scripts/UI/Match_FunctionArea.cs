@@ -13,7 +13,7 @@ public class Match_FunctionArea : MonoBehaviour
 
     public EventHandler OnRefreshBtnClick;
 
-    [SerializeField] private Slider matchSlider;
+    [SerializeField] private Match_MoneyNumSlider moneyNumSlider;
     [SerializeField] private Button refreshBtn;
 
     private void Awake()
@@ -24,11 +24,18 @@ public class Match_FunctionArea : MonoBehaviour
     private void Start()
     {
         refreshBtn.onClick.AddListener(RefreshBlcoks);
+
+        UpdateSliderVisual(MatchManager.Instance.GetMoneyNumNow());
     }
 
     private void RefreshBlcoks()
     {
         OnRefreshBtnClick?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void UpdateSliderVisual(int nowNum)
+    {
+        moneyNumSlider.UpdateVisual(nowNum, MatchGameData.Instance.GetMoneyNumMax());
     }
 
 }

@@ -21,7 +21,11 @@ public class MatchManager : MonoBehaviour
     [SerializeField] private RectTransform blockParentTransform;
     [SerializeField] private MatchBlcokSOList matchBlcokSOList;
 
-    private int blockSize = 100;
+    [SerializeField] private Match_AddDataConfigSO addDataConfigSO;
+
+
+    //方块数据
+    private int blockSize = 95;
 
     private int gridSizeX = 9;
     private int gridSizeY = 8;
@@ -30,6 +34,8 @@ public class MatchManager : MonoBehaviour
 
     private MatchBlock selectedBlock;
 
+
+    //状态
     private bool isSwapping = false;
     private bool isFreshing = false;
     private bool canFresh = true;
@@ -39,18 +45,25 @@ public class MatchManager : MonoBehaviour
 
     private List<MatchBlock> destoryBlocksList;
 
+    //动画时间
     private float animationDuration;
     private float blockNormalDuration = 0.5f;
-    private float refreshBlockDropDuration = 15f;
+    private float refreshBlockDestoryDuration = 2f;
+    private float refreshBlockDropDuration = 5f;
 
     private int superSwapNumNow;
+    private int technologyPointNumNow;
+    private int moneyNumNow;
+
+    private int continuoMatchNum;
+    private int matchBlcokNum;
 
     private void Awake()
     {
         Instance = this;
 
         animationDuration = blockNormalDuration;
-        superSwapNumNow = SixWarGameManager.Instance.GetSuperSwapNum();
+        superSwapNumNow = MatchGameData.Instance.GetSuperSwapNumMax();
 
         blocksArray = new MatchBlock[gridSizeX, gridSizeY];
         destoryBlocksList = new List<MatchBlock>();
@@ -82,9 +95,11 @@ public class MatchManager : MonoBehaviour
         {
             for (int y = 0; y < gridSizeY; y++)
             {
-                blocksArray[x, y].DestroySelf();
+                blocksArray[x, y].DestroySelf(true, refreshBlockDestoryDuration);
             }
         }
+
+        yield return new WaitForSeconds(refreshBlockDestoryDuration);
 
         Initialize();
 
@@ -112,8 +127,10 @@ public class MatchManager : MonoBehaviour
     {
         RectTransform block = Instantiate(blockPrefab);
 
+        block.GetComponent<RectTransform>().sizeDelta = new Vector2(blockSize, blockSize);
+
         block.SetParent(blockParentTransform);
-        block.anchoredPosition = new Vector2(y * blockSize, x * -blockSize + 900);
+        block.anchoredPosition = new Vector2((y + 0.5f) * blockSize, (x + 0.5f) * -blockSize + 900);
 
         MatchBlock blockComponent = block.GetComponent<MatchBlock>();
         blockComponent.SetMatchBlockSO(GetRandomSafeMatchBlockSO(x, y));
@@ -160,7 +177,7 @@ public class MatchManager : MonoBehaviour
         {
             selectedBlock = null;
 
-            print("MoveDead");
+            //print("MoveDead");
 
             return;
         }
@@ -185,10 +202,14 @@ public class MatchManager : MonoBehaviour
     {
         if (isSwapping) yield return 0;
 
+        continuoMatchNum = 0;
+
         //交换
         MatchBlock swapBlock = GetSwapBlockWithMouseDic(swapDic);
         SwapBlock(selectedBlock, swapBlock);
         yield return new WaitForSeconds(animationDuration);
+
+
 
         if (CheckMatch())
         {
@@ -203,6 +224,7 @@ public class MatchManager : MonoBehaviour
             {
                 //没有超级交换次数
                 SwapBlock(swapBlock, selectedBlock);
+                yield return new WaitForSeconds(animationDuration);
             }
             else
             {
@@ -220,21 +242,36 @@ public class MatchManager : MonoBehaviour
     {
         if (CheckMatch())
         {
+            continuoMatchNum++;
             DestroyBlocksInMatchBlocksList();
             yield return new WaitForSeconds(animationDuration);
-            //print(1);
 
             StartCoroutine(CheckAgain());
         }
         else
         {
+            AddTechnologyPoint(continuoMatchNum);
+            //print(continuoMatchNum);
             isSwapping = false;
         }
     }
 
+    private void AddTechnologyPoint(int num)
+    {
+        int addNum = num;
+        if (technologyPointNumNow + num > MatchGameData.Instance.GetTechnologyPointNumMax())
+        {
+            addNum = MatchGameData.Instance.GetTechnologyPointNumMax() - technologyPointNumNow;
+        }
+
+        Match_TechnologyArea.Instance.AddTechnologyPoint(addNum);
+
+        technologyPointNumNow += addNum;
+    }
+
     private MatchBlock GetSwapBlockWithMouseDic(Vector2 swapDic)
     {
-        if (selectedBlock.IsDestroyed()) return null;
+        if (selectedBlock.IsDestroyed() || selectedBlock == null) return null;
 
         Vector2 selectedBlockPos = selectedBlock.GetGridPos();
         Vector2 swapBlockPos = selectedBlockPos + swapDic;
@@ -254,8 +291,8 @@ public class MatchManager : MonoBehaviour
 
     private void SwapBlock(MatchBlock selectedBlock, MatchBlock swapBlcok)
     {
-        if (selectedBlock.IsDestroyed()) return;
-        if (swapBlcok == null) return;
+        if (selectedBlock.IsDestroyed() || selectedBlock == null) return;
+        if (swapBlcok.IsDestroyed() || swapBlcok == null) return;
 
         Vector2 selectedBlockPos = selectedBlock.GetGridPos();
         Vector2 swapBlockPos = swapBlcok.GetGridPos();
@@ -273,7 +310,7 @@ public class MatchManager : MonoBehaviour
         if (swapBlock.GetMatchBlockSO() == selectedBlock.GetMatchBlockSO())
         {
             //交换同类型方块，无意义
-            print("SwapBlock is same Type");
+            //print("SwapBlock is same Type");
             return;
         }
 
@@ -373,20 +410,31 @@ public class MatchManager : MonoBehaviour
         return blocksArray[x, y];
     }
 
-    private void AddBlockToDestoryList(MatchBlock block)
+    private bool AddBlockToDestoryList(MatchBlock block)
     {
-        if (destoryBlocksList.Contains(block)) return;
+        if (destoryBlocksList.Contains(block)) return false;
 
         destoryBlocksList.Add(block);
+        return true;
     }
 
     private void UpdateBlockPosition(MatchBlock block, float durationTime)
     {
-        block.GetComponent<RectTransform>().DOAnchorPos(new Vector2(block.GetGridPosY() * blockSize, block.GetGridPosX() * -blockSize), durationTime);
+        block.GetComponent<RectTransform>().DOAnchorPos(new Vector2((block.GetGridPosY() + 0.5f) * blockSize, (block.GetGridPosX() + 0.5f) * -blockSize), durationTime);
     }
 
     public int GetSuperSwapNumNow()
     {
         return superSwapNumNow;
+    }
+
+    public int GetTechnologyPointNumNow()
+    {
+        return technologyPointNumNow;
+    }
+
+    public int GetMoneyNumNow()
+    {
+        return moneyNumNow;
     }
 }

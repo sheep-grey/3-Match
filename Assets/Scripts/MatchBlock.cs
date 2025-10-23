@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -69,8 +70,25 @@ public class MatchBlock : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         return matchBlockSO;
     }
 
-    public void DestroySelf()
+    public void DestroySelf(bool isFresh = false, float duration = 0f)
     {
-        Destroy(gameObject);
+        if (isFresh)
+        {
+            StartCoroutine(RefreshDestorySelf(duration));
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+    }
+
+    public IEnumerator RefreshDestorySelf(float duration)
+    {
+        this.GetComponent<RectTransform>().DOScale(new Vector2(0, 0), duration);
+
+        yield return new WaitForSeconds(duration);
+
+        DestroySelf();
     }
 }
