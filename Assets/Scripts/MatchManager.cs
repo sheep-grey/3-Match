@@ -175,7 +175,7 @@ public class MatchManager : MonoBehaviour
 
     public void PressBlockStart()
     {
-        //if (isSwapping) return;
+        if (isSwapping) return; //一次操作不可动 眼疾手快就注释掉这一行
         if (isFreshing) return;
 
         mousePressPosition = Mouse.current.position.ReadValue();
@@ -184,7 +184,7 @@ public class MatchManager : MonoBehaviour
 
     public void PressBlockOver(MatchBlock selectedBlock)
     {
-        //if (isSwapping) return;
+        if (isSwapping) return; //一次操作不可动 眼疾手快就注释掉这一行
         if (isFreshing) return;
 
         Vector2 mousePressOverPosition = Mouse.current.position.ReadValue();
@@ -215,7 +215,7 @@ public class MatchManager : MonoBehaviour
 
     private IEnumerator SwapAndCheckMatch(Vector2 swapDic, MatchBlock selectedBlock)
     {
-        //if (isSwapping) yield break;
+        if (isSwapping) yield break; //一次操作不可动 眼疾手快就注释掉这一行
 
         continuoMatchNum = 0;
 
