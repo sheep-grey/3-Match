@@ -99,8 +99,8 @@ public class MatchBlock : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         matchGroupNum = num;
     }
 
-    public int GetMatchGroupNum()
+    public int GetMatchGroupNum() 
     {
-        return matchGroupNum;
+        return matchGroupNum; 
     }
 }

@@ -227,8 +227,17 @@ public class MatchManager : MonoBehaviour
 
         //交换
         MatchBlock swapBlock = GetSwapBlockWithMouseDic(swapDic);
-        SwapBlock(selectedBlock, swapBlock);
-        yield return new WaitForSeconds(animationDuration);
+
+        if (SwapBlock(selectedBlock, swapBlock))
+        {
+            yield return new WaitForSeconds(animationDuration);
+        }
+        else
+        {
+            isSwapping = false;
+            yield break;
+        }
+
 
 
 
@@ -310,10 +319,10 @@ public class MatchManager : MonoBehaviour
         return swapBlock;
     }
 
-    private void SwapBlock(MatchBlock selectedBlock, MatchBlock swapBlcok)
+    private bool SwapBlock(MatchBlock selectedBlock, MatchBlock swapBlcok)
     {
-        if (selectedBlock.IsDestroyed() || selectedBlock == null) return;
-        if (swapBlcok.IsDestroyed() || swapBlcok == null) return;
+        if (selectedBlock.IsDestroyed() || selectedBlock == null) return false;
+        if (swapBlcok.IsDestroyed() || swapBlcok == null) return false;
 
         Vector2 selectedBlockPos = selectedBlock.GetGridPos();
         Vector2 swapBlockPos = swapBlcok.GetGridPos();
@@ -321,7 +330,7 @@ public class MatchManager : MonoBehaviour
         if (swapBlockPos.x < 0 || swapBlockPos.x >= gridSizeX || swapBlockPos.y < 0 || swapBlockPos.y >= gridSizeY)
         {
             print("Over Grid Index");
-            return;
+            return false;
         }
 
         isSwapping = true;
@@ -331,8 +340,8 @@ public class MatchManager : MonoBehaviour
         if (swapBlock.GetMatchBlockSO() == selectedBlock.GetMatchBlockSO())
         {
             //交换同类型方块，无意义
-            //print("SwapBlock is same Type");
-            return;
+            print("SwapBlock is same Type");
+            return false;
         }
 
         blocksArray[(int)swapBlockPos.x, (int)swapBlockPos.y] = selectedBlock;
@@ -346,6 +355,8 @@ public class MatchManager : MonoBehaviour
 
         UpdateBlockPosition(selectedBlock, animationDuration);
         UpdateBlockPosition(swapBlock, animationDuration);
+
+        return true;
     }
 
     private bool CheckMatch()

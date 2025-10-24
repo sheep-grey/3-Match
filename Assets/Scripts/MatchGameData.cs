@@ -9,7 +9,7 @@ public class MatchGameData : MonoBehaviour
         get; private set;
     }
 
-    private int superSwapNumMax = 0;
+    private int superSwapNumMax = 2;
 
     private int technologyPointNumMax = 8;
 
