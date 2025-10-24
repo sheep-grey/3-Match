@@ -15,17 +15,23 @@ public class MatchBlock : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private int matchGroupNum;
 
+    private bool isSwaping;
+    private bool isDroping;
+
     //°´×¡·½¿é
     public void OnPointerDown(PointerEventData data)
     {
+        if (isSwaping || isDroping) return;
         //print(gameObject + "Press Start");
-        MatchManager.Instance.PressBlockStart(this);
+        MatchManager.Instance.PressBlockStart();
     }
 
     public void OnPointerUp(PointerEventData data)
     {
+        if (isSwaping || isDroping) return;
+
         //print(gameObject + "Press Over");
-        MatchManager.Instance.PressBlockOver();
+        MatchManager.Instance.PressBlockOver(this);
     }
 
     public void UpdateVisual()
@@ -99,8 +105,28 @@ public class MatchBlock : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         matchGroupNum = num;
     }
 
-    public int GetMatchGroupNum() 
+    public int GetMatchGroupNum()
     {
-        return matchGroupNum; 
+        return matchGroupNum;
+    }
+
+    public void SetIsSwaping(bool isSwaping)
+    {
+        this.isSwaping = isSwaping;
+    }
+
+    public bool GetIsSwaping()
+    {
+        return isSwaping;
+    }
+
+    public bool GetIsDroping()
+    {
+        return isDroping;
+    }
+
+    public void SetIsDroping(bool isDroping)
+    {
+        this.isDroping = isDroping;
     }
 }

@@ -33,8 +33,6 @@ public class MatchManager : MonoBehaviour
 
     private MatchBlock[,] blocksArray;
 
-    private MatchBlock selectedBlock;
-
 
     //状态
     private bool isSwapping = false;
@@ -175,20 +173,18 @@ public class MatchManager : MonoBehaviour
     }
 
 
-    public void PressBlockStart(MatchBlock block)
+    public void PressBlockStart()
     {
-        if (isSwapping) return;
+        //if (isSwapping) return;
         if (isFreshing) return;
 
         mousePressPosition = Mouse.current.position.ReadValue();
         //print(mousePressPosition);
-
-        selectedBlock = block;
     }
 
-    public void PressBlockOver()
+    public void PressBlockOver(MatchBlock selectedBlock)
     {
-        if (isSwapping) return;
+        //if (isSwapping) return;
         if (isFreshing) return;
 
         Vector2 mousePressOverPosition = Mouse.current.position.ReadValue();
@@ -196,8 +192,6 @@ public class MatchManager : MonoBehaviour
 
         if (Vector2.Distance(mousePressOverPosition, mousePressPosition) < mouseMoveDeadValue)
         {
-            selectedBlock = null;
-
             //print("MoveDead");
 
             return;
@@ -216,24 +210,32 @@ public class MatchManager : MonoBehaviour
             swapDic.x = (mousePressOverPosition.y - mousePressPosition.y) > 0 ? -1 : 1;
         }
 
-        StartCoroutine(SwapAndCheckMatch(swapDic));
+        StartCoroutine(SwapAndCheckMatch(swapDic, selectedBlock));
     }
 
-    private IEnumerator SwapAndCheckMatch(Vector2 swapDic)
+    private IEnumerator SwapAndCheckMatch(Vector2 swapDic, MatchBlock selectedBlock)
     {
-        if (isSwapping) yield return 0;
+        //if (isSwapping) yield break;
 
         continuoMatchNum = 0;
 
         //交换
-        MatchBlock swapBlock = GetSwapBlockWithMouseDic(swapDic);
+        MatchBlock swapBlock = GetSwapBlockWithMouseDic(swapDic, selectedBlock);
+
+        if (swapBlock.GetIsDroping() || swapBlock.GetIsSwaping()) yield break;
 
         if (SwapBlock(selectedBlock, swapBlock))
         {
+            swapBlock.SetIsSwaping(true);
+            selectedBlock.SetIsSwaping(true);
             yield return new WaitForSeconds(animationDuration);
+            swapBlock.SetIsSwaping(false);
+            selectedBlock.SetIsSwaping(false);
         }
         else
         {
+            swapBlock.SetIsSwaping(false);
+            selectedBlock.SetIsSwaping(false);
             isSwapping = false;
             yield break;
         }
@@ -252,9 +254,15 @@ public class MatchManager : MonoBehaviour
         {
             if (superSwapNumNow <= 0)
             {
+                swapBlock.SetIsSwaping(true);
+                selectedBlock.SetIsSwaping(true);
                 //没有超级交换次数
-                SwapBlock(swapBlock, selectedBlock);
+                SwapBlock(swapBlock, selectedBlock, true);
                 yield return new WaitForSeconds(animationDuration);
+                swapBlock.SetIsSwaping(false);
+                selectedBlock.SetIsSwaping(false);
+
+                StartCoroutine(CheckAgain());
             }
             else
             {
@@ -299,9 +307,9 @@ public class MatchManager : MonoBehaviour
         technologyPointNumNow += addNum;
     }
 
-    private MatchBlock GetSwapBlockWithMouseDic(Vector2 swapDic)
+    private MatchBlock GetSwapBlockWithMouseDic(Vector2 swapDic, MatchBlock selectedBlock)
     {
-        if (selectedBlock.IsDestroyed() || selectedBlock == null) return null;
+        if (selectedBlock.IsDestroyed() || selectedBlock == null || selectedBlock.GetIsSwaping()) return null;
 
         Vector2 selectedBlockPos = selectedBlock.GetGridPos();
         Vector2 swapBlockPos = selectedBlockPos + swapDic;
@@ -319,10 +327,16 @@ public class MatchManager : MonoBehaviour
         return swapBlock;
     }
 
-    private bool SwapBlock(MatchBlock selectedBlock, MatchBlock swapBlcok)
+    private bool SwapBlock(MatchBlock selectedBlock, MatchBlock swapBlcok, bool noSuper = false)
     {
         if (selectedBlock.IsDestroyed() || selectedBlock == null) return false;
         if (swapBlcok.IsDestroyed() || swapBlcok == null) return false;
+
+        if (!noSuper)
+        {
+            if (selectedBlock.GetIsSwaping()) return false;
+            if (swapBlcok.GetIsSwaping()) return false;
+        }
 
         Vector2 selectedBlockPos = selectedBlock.GetGridPos();
         Vector2 swapBlockPos = swapBlcok.GetGridPos();
@@ -508,7 +522,7 @@ public class MatchManager : MonoBehaviour
                 }
             }
 
-            print(matchAddDataList[Mathf.Min(matchAddDataList.Count - 1, continuoMatchNum)][Mathf.Max(0, sameGroupNum - 3)]);
+            //print(matchAddDataList[Mathf.Min(matchAddDataList.Count - 1, continuoMatchNum)][Mathf.Max(0, sameGroupNum - 3)]);
 
             moneyNumNow = Mathf.Min(MatchGameData.Instance.GetMoneyNumMax(), moneyNumNow + matchAddDataList[Mathf.Min(matchAddDataList.Count - 1, continuoMatchNum)][Mathf.Max(0, sameGroupNum - 3)]);
 
