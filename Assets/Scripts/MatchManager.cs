@@ -16,6 +16,7 @@ public class MatchManager : MonoBehaviour
     }
 
     public EventHandler OnSuperSwapNumNowChange;
+    public EventHandler OnMoneyNumNowChange;
 
     [SerializeField] private RectTransform blockPrefab;
     [SerializeField] private RectTransform blockParentTransform;
@@ -56,7 +57,9 @@ public class MatchManager : MonoBehaviour
     private int moneyNumNow;
 
     private int continuoMatchNum;
-    private int matchBlcokNum;
+    private int matchGroupNum;
+
+    private List<List<int>> matchAddDataList;
 
     private void Awake()
     {
@@ -67,6 +70,8 @@ public class MatchManager : MonoBehaviour
 
         blocksArray = new MatchBlock[gridSizeX, gridSizeY];
         destoryBlocksList = new List<MatchBlock>();
+
+        LoadAddDataList();
     }
 
     private void Start()
@@ -74,6 +79,20 @@ public class MatchManager : MonoBehaviour
         Initialize();
 
         Match_FunctionArea.Instance.OnRefreshBtnClick += Match_FunctionArea_OnRefreshBtnClick;
+    }
+
+    private void LoadAddDataList()
+    {
+        matchAddDataList = new List<List<int>>();
+
+        for (int i = 0; i < 3; i++)
+        {
+            matchAddDataList.Add(new List<int>());
+        }
+
+        matchAddDataList[0] = addDataConfigSO.match_Once;
+        matchAddDataList[1] = addDataConfigSO.match_Twice;
+        matchAddDataList[2] = addDataConfigSO.match_Third;
     }
 
     private void Match_FunctionArea_OnRefreshBtnClick(object sender, EventArgs eventArgs)
@@ -159,6 +178,7 @@ public class MatchManager : MonoBehaviour
     public void PressBlockStart(MatchBlock block)
     {
         if (isSwapping) return;
+        if (isFreshing) return;
 
         mousePressPosition = Mouse.current.position.ReadValue();
         //print(mousePressPosition);
@@ -169,6 +189,7 @@ public class MatchManager : MonoBehaviour
     public void PressBlockOver()
     {
         if (isSwapping) return;
+        if (isFreshing) return;
 
         Vector2 mousePressOverPosition = Mouse.current.position.ReadValue();
         //print(mousePressOverPosition);
@@ -331,6 +352,8 @@ public class MatchManager : MonoBehaviour
     {
         bool isMatch = false;
 
+        int matchGroupNumNow = 0;
+
         //横向判断
         for (int x = 0; x < gridSizeX; x++)
         {
@@ -344,9 +367,50 @@ public class MatchManager : MonoBehaviour
                 {
                     isMatch = true;
 
-                    AddBlockToDestoryList(block01);
-                    AddBlockToDestoryList(block02);
-                    AddBlockToDestoryList(block03);
+                    int tempGroupNow = 0;
+                    bool isNewGroup = false;
+
+                    if (AddNewBlockToDestoryList(block01))
+                    {
+                        isNewGroup = true;
+                    }
+
+                    if (AddNewBlockToDestoryList(block02))
+                    {
+
+                    }
+                    else
+                    {
+                        isNewGroup = false;
+
+                    }
+
+                    if (AddNewBlockToDestoryList(block03))
+                    {
+
+                    }
+                    else
+                    {
+                        isNewGroup = false;
+
+                    }
+
+                    if (isNewGroup)
+                    {
+                        //新的一组
+                        block01.SetMatchGroupNum(matchGroupNumNow);
+                        block02.SetMatchGroupNum(matchGroupNumNow);
+                        block03.SetMatchGroupNum(matchGroupNumNow);
+
+                        matchGroupNumNow++;
+                    }
+                    else
+                    {
+                        //和第一个方块是一组的
+                        tempGroupNow = block01.GetMatchGroupNum();
+                        block02.SetMatchGroupNum(tempGroupNow);
+                        block03.SetMatchGroupNum(tempGroupNow);
+                    }
                 }
             }
         }
@@ -364,11 +428,57 @@ public class MatchManager : MonoBehaviour
                 {
                     isMatch = true;
 
-                    AddBlockToDestoryList(block01);
-                    AddBlockToDestoryList(block02);
-                    AddBlockToDestoryList(block03);
+                    int tempGroupNow = 0;
+                    bool isNewGroup = false;
+
+                    if (AddNewBlockToDestoryList(block01))
+                    {
+                        isNewGroup = true;
+                    }
+
+                    if (AddNewBlockToDestoryList(block02))
+                    {
+
+                    }
+                    else
+                    {
+                        isNewGroup = false;
+
+                    }
+
+                    if (AddNewBlockToDestoryList(block03))
+                    {
+
+                    }
+                    else
+                    {
+                        isNewGroup = false;
+
+                    }
+
+                    if (isNewGroup)
+                    {
+                        //新的一组
+                        block01.SetMatchGroupNum(matchGroupNumNow);
+                        block02.SetMatchGroupNum(matchGroupNumNow);
+                        block03.SetMatchGroupNum(matchGroupNumNow);
+
+                        matchGroupNumNow++;
+                    }
+                    else
+                    {
+                        //和第一个方块是一组的
+                        tempGroupNow = block01.GetMatchGroupNum();
+                        block02.SetMatchGroupNum(tempGroupNow);
+                        block03.SetMatchGroupNum(tempGroupNow);
+                    }
                 }
             }
+        }
+
+        if (isMatch)
+        {
+            matchGroupNum = matchGroupNumNow;
         }
 
         return isMatch;
@@ -376,12 +486,31 @@ public class MatchManager : MonoBehaviour
 
     private void DestroyBlocksInMatchBlocksList()
     {
+        for (int i = 0; i < matchGroupNum; i++)
+        {
+            int sameGroupNum = 0;
+            foreach (MatchBlock block in destoryBlocksList)
+            {
+                if (block.GetMatchGroupNum() == i)
+                {
+                    sameGroupNum++;
+                }
+            }
+
+            print(matchAddDataList[Mathf.Min(matchAddDataList.Count - 1, continuoMatchNum)][Mathf.Max(0, sameGroupNum - 3)]);
+
+            moneyNumNow = Mathf.Min(MatchGameData.Instance.GetMoneyNumMax(), moneyNumNow + matchAddDataList[Mathf.Min(matchAddDataList.Count - 1, continuoMatchNum)][Mathf.Max(0, sameGroupNum - 3)]);
+
+            OnMoneyNumNowChange?.Invoke(this, EventArgs.Empty);
+        }
+
         foreach (MatchBlock block in destoryBlocksList)
         {
             BlocksDown(block);
 
             block.DestroySelf();
         }
+
 
         destoryBlocksList.Clear();
     }
@@ -410,7 +539,7 @@ public class MatchManager : MonoBehaviour
         return blocksArray[x, y];
     }
 
-    private bool AddBlockToDestoryList(MatchBlock block)
+    private bool AddNewBlockToDestoryList(MatchBlock block)
     {
         if (destoryBlocksList.Contains(block)) return false;
 

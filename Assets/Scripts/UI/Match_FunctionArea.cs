@@ -26,6 +26,13 @@ public class Match_FunctionArea : MonoBehaviour
         refreshBtn.onClick.AddListener(RefreshBlcoks);
 
         UpdateSliderVisual(MatchManager.Instance.GetMoneyNumNow());
+
+        MatchManager.Instance.OnMoneyNumNowChange += MatchManager_OnMoneyNumNowChange;
+    }
+
+    private void MatchManager_OnMoneyNumNowChange(object sender, EventArgs eventArgs)
+    {
+        UpdateSliderVisual(MatchManager.Instance.GetMoneyNumNow());
     }
 
     private void RefreshBlcoks()
@@ -33,7 +40,7 @@ public class Match_FunctionArea : MonoBehaviour
         OnRefreshBtnClick?.Invoke(this, EventArgs.Empty);
     }
 
-    public void UpdateSliderVisual(int nowNum)
+    private void UpdateSliderVisual(int nowNum)
     {
         moneyNumSlider.UpdateVisual(nowNum, MatchGameData.Instance.GetMoneyNumMax());
     }

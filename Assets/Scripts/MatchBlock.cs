@@ -13,6 +13,8 @@ public class MatchBlock : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private MatchBlockSO matchBlockSO;
 
+    private int matchGroupNum;
+
     //°´×¡·½¿é
     public void OnPointerDown(PointerEventData data)
     {
@@ -90,5 +92,15 @@ public class MatchBlock : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         yield return new WaitForSeconds(duration);
 
         DestroySelf();
+    }
+
+    public void SetMatchGroupNum(int num)
+    {
+        matchGroupNum = num;
+    }
+
+    public int GetMatchGroupNum()
+    {
+        return matchGroupNum;
     }
 }

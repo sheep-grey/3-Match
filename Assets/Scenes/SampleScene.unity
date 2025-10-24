@@ -914,7 +914,7 @@ MonoBehaviour:
     type: 3}
   blockParentTransform: {fileID: 2135385365}
   matchBlcokSOList: {fileID: 11400000, guid: b3ac00d4eb3663949883a95775e010a2, type: 2}
-  addDataConfigSO: {fileID: 0}
+  addDataConfigSO: {fileID: 11400000, guid: b3273d1af119d0242a9d85969797a486, type: 2}
 --- !u!4 &356777170
 Transform:
   m_ObjectHideFlags: 0
@@ -2436,7 +2436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.64209914, b: 0.24056602, a: 1}
+  m_Color: {r: 1, g: 0.8917792, b: 0.6745283, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
