@@ -175,7 +175,7 @@ public class MatchManager : MonoBehaviour
 
     public void PressBlockStart()
     {
-        if (isSwapping) return; //一次操作不可动 眼疾手快就注释掉这一行
+        //if (isSwapping) return; //一次操作不可动 眼疾手快就注释掉这一行
         if (isFreshing) return;
 
         mousePressPosition = Mouse.current.position.ReadValue();
@@ -184,7 +184,7 @@ public class MatchManager : MonoBehaviour
 
     public void PressBlockOver(MatchBlock selectedBlock)
     {
-        if (isSwapping) return; //一次操作不可动 眼疾手快就注释掉这一行
+        //if (isSwapping) return; //一次操作不可动 眼疾手快就注释掉这一行
         if (isFreshing) return;
 
         Vector2 mousePressOverPosition = Mouse.current.position.ReadValue();
@@ -215,7 +215,7 @@ public class MatchManager : MonoBehaviour
 
     private IEnumerator SwapAndCheckMatch(Vector2 swapDic, MatchBlock selectedBlock)
     {
-        if (isSwapping) yield break; //一次操作不可动 眼疾手快就注释掉这一行
+        //if (isSwapping) yield break; //一次操作不可动 眼疾手快就注释掉这一行
 
         continuoMatchNum = 0;
 
@@ -243,7 +243,7 @@ public class MatchManager : MonoBehaviour
 
 
 
-        if (CheckMatch())
+        if (CheckMatch(swapBlock, selectedBlock))
         {
             DestroyBlocksInMatchBlocksList();
             yield return new WaitForSeconds(animationDuration);
@@ -332,6 +332,8 @@ public class MatchManager : MonoBehaviour
         if (selectedBlock.IsDestroyed() || selectedBlock == null) return false;
         if (swapBlcok.IsDestroyed() || swapBlcok == null) return false;
 
+        if (Mathf.Abs(swapBlcok.GetGridPosX() - selectedBlock.GetGridPosX()) >= 2 || Mathf.Abs(swapBlcok.GetGridPosY() - selectedBlock.GetGridPosY()) >= 2) return false;
+
         if (!noSuper)
         {
             if (selectedBlock.GetIsSwaping()) return false;
@@ -354,7 +356,7 @@ public class MatchManager : MonoBehaviour
         if (swapBlock.GetMatchBlockSO() == selectedBlock.GetMatchBlockSO())
         {
             //交换同类型方块，无意义
-            print("SwapBlock is same Type");
+            //print("SwapBlock is same Type");
             return false;
         }
 
@@ -373,7 +375,7 @@ public class MatchManager : MonoBehaviour
         return true;
     }
 
-    private bool CheckMatch()
+    private bool CheckMatch(MatchBlock selectBlock = null, MatchBlock swapBlock = null)
     {
         bool isMatch = false;
 
@@ -499,6 +501,11 @@ public class MatchManager : MonoBehaviour
                     }
                 }
             }
+        }
+
+        if (selectBlock != null && swapBlock != null)
+        {
+            return destoryBlocksList.Contains(selectBlock) || destoryBlocksList.Contains(swapBlock);
         }
 
         if (isMatch)
