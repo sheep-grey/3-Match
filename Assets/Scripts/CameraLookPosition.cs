@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class CameraLookPosition : MonoBehaviour
 {
+    private Vector3 targetPosition;
+
     private void Update()
     {
         int moveDir = 0;
@@ -18,7 +20,14 @@ public class CameraLookPosition : MonoBehaviour
             moveDir = -1;
         }
 
-        float cameraMoveSpeed = 5f;
-        transform.position += new Vector3(0, 0, moveDir * cameraMoveSpeed * Time.deltaTime);
+        float cameraMoveSpeed = 7.5f;
+        float moveMax = 14.5f;
+        float moveMin = 1.5f;
+        targetPosition = new Vector3(0, 0, Mathf.Clamp((moveDir * cameraMoveSpeed * Time.deltaTime) + transform.position.z, moveMin, moveMax));
+    }
+
+    private void LateUpdate()
+    {
+        transform.position = targetPosition;
     }
 }
