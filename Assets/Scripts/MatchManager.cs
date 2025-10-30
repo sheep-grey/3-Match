@@ -192,7 +192,7 @@ public class MatchManager : MonoBehaviour
 
         if (Vector2.Distance(mousePressOverPosition, mousePressPosition) < mouseMoveDeadValue)
         {
-            //print("MoveDead");
+            print("MoveDead");
 
             return;
         }

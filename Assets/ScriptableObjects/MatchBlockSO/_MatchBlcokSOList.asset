@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ec2b14d85550448b11c2c1b0d454e3, type: 3}
+  m_Name: _MatchBlcokSOList
+  m_EditorClassIdentifier: 
+  matchBlockSOList:
+  - {fileID: 11400000, guid: 61024bcc6646c2f47bf2a52ea3f74adf, type: 2}
+  - {fileID: 11400000, guid: 82f5702fe44d83342ad82ca6082ced75, type: 2}
+  - {fileID: 11400000, guid: 0f920be68f1c78d46b4ef73ff00819d0, type: 2}
+  - {fileID: 11400000, guid: 0aa24e0e745206b47b8399756e1d4abb, type: 2}
+  - {fileID: 11400000, guid: 166915ce778f99a4ca0fa7cd51bb470d, type: 2}
