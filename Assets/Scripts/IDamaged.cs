@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IDamaged
 {
-    public void Damaged(PlayerOwner damageResource);
+    public void Damaged(PlayerOwner damageResource, float damageValue);
 
     public PlayerOwner GetPlayerOwner();
 }

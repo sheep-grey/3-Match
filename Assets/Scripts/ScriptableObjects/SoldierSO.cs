@@ -14,4 +14,5 @@ public class SoldierSO : ScriptableObject
     public int healthMax;
     public float attackDamage;
     public float attackRange;
+    public float attack0_Cd;
 }

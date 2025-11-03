@@ -9,15 +9,17 @@ public class BaseHome : MonoBehaviour, IDamaged
 
     [SerializeField] private Transform soldierSpawnPos;
 
-    [SerializeField] private Slider healthSlider;
+    [SerializeField] private HealthSlider healthSlider;
 
     private int baseHomeHealthMax;
     private int baseHomeHealthNow;
 
-    private void Awake()
+    private void Start()
     {
         baseHomeHealthMax = FightGameData.Instance.GetBaseHomeHealthMax(playerOwner);
         baseHomeHealthNow = baseHomeHealthMax;
+
+        UpdateHealthSliderVisual();
     }
 
     public Transform GetSoldierSpawnPos()
@@ -25,13 +27,24 @@ public class BaseHome : MonoBehaviour, IDamaged
         return soldierSpawnPos;
     }
 
-    public void Damaged(PlayerOwner damageResource)
+    public void Damaged(PlayerOwner damageResource, float damageValue)
     {
-
+        baseHomeHealthNow = Mathf.Max(0, baseHomeHealthNow - (int)damageValue);
+        UpdateHealthSliderVisual();
     }
 
     public PlayerOwner GetPlayerOwner()
     {
         return playerOwner;
+    }
+
+    public Transform GetSoldierSpwanPos()
+    {
+        return soldierSpawnPos;
+    }
+
+    private void UpdateHealthSliderVisual()
+    {
+        healthSlider.UpdateVisual(baseHomeHealthNow, baseHomeHealthMax);
     }
 }

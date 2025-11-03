@@ -16,4 +16,17 @@ public class FightManager : MonoBehaviour
     {
         Instance = this;
     }
+
+    public BaseHome GetOpposedBaseHome(PlayerOwner playerOwner)
+    {
+        switch (playerOwner)
+        {
+            case PlayerOwner.Player01:
+                return baseHome_Player02;
+            case PlayerOwner.Player02:
+                return baseHome_Player01;
+            default:
+                return null;
+        }
+    }
 }

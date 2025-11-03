@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d05d9348fc4d7943bd65551a8103d4d, type: 3}
   m_Name: Knight
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  spendMoney: 0
+  prefab: {fileID: 3137054020910783915, guid: 557b50dc8120e524eafbacb1c803695f, type: 3}
+  spendMoney: 100
   spendTechnologyPoint: 0
-  speed: 0
-  healthMax: 0
-  attackDamage: 0
-  attackRange: 0
+  speed: 1.5
+  healthMax: 20
+  attackDamage: 5
+  attackRange: 1
+  attack0_Cd: 3.5
