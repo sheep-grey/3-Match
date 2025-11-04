@@ -754,7 +754,7 @@ PrefabInstance:
     - target: {fileID: 3137054020910783915, guid: 557b50dc8120e524eafbacb1c803695f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.3142238
+      value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: 3137054020910783915, guid: 557b50dc8120e524eafbacb1c803695f,
         type: 3}
@@ -825,6 +825,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Person_Knight
+      objectReference: {fileID: 0}
+    - target: {fileID: 6133682527845667898, guid: 557b50dc8120e524eafbacb1c803695f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4516,7 +4521,7 @@ PrefabInstance:
     - target: {fileID: 3137054020910783915, guid: 557b50dc8120e524eafbacb1c803695f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.45
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 3137054020910783915, guid: 557b50dc8120e524eafbacb1c803695f,
         type: 3}
@@ -4526,12 +4531,12 @@ PrefabInstance:
     - target: {fileID: 3137054020910783915, guid: 557b50dc8120e524eafbacb1c803695f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.627597
+      value: 2.24
       objectReference: {fileID: 0}
     - target: {fileID: 3137054020910783915, guid: 557b50dc8120e524eafbacb1c803695f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3137054020910783915, guid: 557b50dc8120e524eafbacb1c803695f,
         type: 3}
@@ -4541,7 +4546,7 @@ PrefabInstance:
     - target: {fileID: 3137054020910783915, guid: 557b50dc8120e524eafbacb1c803695f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3137054020910783915, guid: 557b50dc8120e524eafbacb1c803695f,
         type: 3}
@@ -4556,7 +4561,7 @@ PrefabInstance:
     - target: {fileID: 3137054020910783915, guid: 557b50dc8120e524eafbacb1c803695f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3137054020910783915, guid: 557b50dc8120e524eafbacb1c803695f,
         type: 3}
@@ -4581,12 +4586,17 @@ PrefabInstance:
     - target: {fileID: 4809773380303862392, guid: 557b50dc8120e524eafbacb1c803695f,
         type: 3}
       propertyPath: playerOwner
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6133682527845667898, guid: 557b50dc8120e524eafbacb1c803695f,
         type: 3}
       propertyPath: m_Name
       value: Person_Knight (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6133682527845667898, guid: 557b50dc8120e524eafbacb1c803695f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

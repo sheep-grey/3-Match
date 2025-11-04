@@ -31,6 +31,8 @@ public class Person_Knight : Soldier
 
     private void OnTriggerStay(Collider other)
     {
+        if (other.isTrigger == true) return;//È¥³ý´¥·¢Æ÷
+
         if (other.TryGetComponent(out Soldier soldierComponent))
         {
             if (soldierComponent.GetPlayerOwner() != playerOwner)

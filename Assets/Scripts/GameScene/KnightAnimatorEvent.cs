@@ -5,6 +5,12 @@ using UnityEngine;
 public class KnightAnimatorEvent : MonoBehaviour
 {
     [SerializeField] private Person_Knight knight;
+    [SerializeField] private TrailRenderer trailRenderer;
+
+    private void Awake()
+    {
+        trailRenderer.enabled = false;
+    }
 
     public void Attack0()
     {
@@ -14,5 +20,19 @@ public class KnightAnimatorEvent : MonoBehaviour
     public void DestorySelf()
     {
         knight.DestroySelf();
+    }
+
+    public void ActiveTrail()
+    {
+        StartCoroutine(SetTrailActive());
+    }
+
+    private IEnumerator SetTrailActive()
+    {
+        trailRenderer.enabled = true;
+
+        yield return new WaitForSeconds(0.5f);
+
+        trailRenderer.enabled = false;
     }
 }

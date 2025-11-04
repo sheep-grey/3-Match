@@ -398,6 +398,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5495591986983423020}
   m_SourcePrefab: {fileID: 100100000, guid: adc5c9e90673d5d4da7b406bd81216f8, type: 3}
+--- !u!96 &1642001425581594011 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 5431588277729915104, guid: adc5c9e90673d5d4da7b406bd81216f8,
+    type: 3}
+  m_PrefabInstance: {fileID: 6749047949067396475}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &2986334340189160803 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 8419752288011886616, guid: adc5c9e90673d5d4da7b406bd81216f8,
@@ -423,6 +429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knight: {fileID: 4809773380303862392}
+  trailRenderer: {fileID: 1642001425581594011}
 --- !u!4 &9192334567677845273 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2465954769073011298, guid: adc5c9e90673d5d4da7b406bd81216f8,
