@@ -55,7 +55,7 @@ public class MatchManager : MonoBehaviour
     private int moneyNumNow;
 
     private int continuoMatchNum;
-    private int matchGroupNum;
+    private int matchGroupNum = 1;
 
     private List<List<int>> matchAddDataList;
 
@@ -305,6 +305,11 @@ public class MatchManager : MonoBehaviour
         Match_TechnologyArea.Instance.AddTechnologyPoint(addNum);
 
         technologyPointNumNow += addNum;
+    }
+
+    private void ReduceTechnologyPoint(int num)
+    {
+        Match_TechnologyArea.Instance.ReduceTechnologyPoint(num);
     }
 
     private MatchBlock GetSwapBlockWithMouseDic(Vector2 swapDic, MatchBlock selectedBlock)
@@ -597,5 +602,18 @@ public class MatchManager : MonoBehaviour
     public int GetMoneyNumNow()
     {
         return moneyNumNow;
+    }
+
+    public void SpendMoney(int value)
+    {
+        moneyNumNow -= value;
+        OnMoneyNumNowChange?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void SpendTechnologyPointNow(int value)
+    {
+        ReduceTechnologyPoint(value);
+        technologyPointNumNow -= value;
+
     }
 }

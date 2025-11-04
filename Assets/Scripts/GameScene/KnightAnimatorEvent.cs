@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KnightAnimatorEvent : MonoBehaviour
 {
-    [SerializeField] private Knight knight;
+    [SerializeField] private Person_Knight knight;
 
     public void Attack0()
     {

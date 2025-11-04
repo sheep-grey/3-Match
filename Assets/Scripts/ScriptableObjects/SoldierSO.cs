@@ -7,6 +7,8 @@ public class SoldierSO : ScriptableObject
 {
     public Transform prefab;
 
+    public string soldierName;
+
     public int spendMoney;
     public int spendTechnologyPoint;
 

@@ -29,6 +29,7 @@ public class BaseHome : MonoBehaviour, IDamaged
 
     public void Damaged(PlayerOwner damageResource, float damageValue)
     {
+        if (damageResource == playerOwner) return;
         baseHomeHealthNow = Mathf.Max(0, baseHomeHealthNow - (int)damageValue);
         UpdateHealthSliderVisual();
     }
