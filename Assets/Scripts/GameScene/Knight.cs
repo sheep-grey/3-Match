@@ -31,18 +31,18 @@ public class Knight : Soldier
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.TryGetComponent(out IDamaged damageComponent))
+        if (other.TryGetComponent(out Soldier soldierComponent))
         {
-            if (damageComponent.GetPlayerOwner() != playerOwner)
+            if (soldierComponent.GetPlayerOwner() != playerOwner)
             {
                 //敌对士兵
-                if (inAttackRangeEnemyList.Contains(other.GetComponent<Soldier>()))
+                if (inAttackRangeEnemyList.Contains(soldierComponent))
                 {
                     return;
                 }
                 else
                 {
-                    if (other.GetComponent<Soldier>().IsDead())
+                    if (soldierComponent.IsDead())
                     {
                         inAttackRangeEnemyList.Remove(other.GetComponent<Soldier>());
                         return;
@@ -118,30 +118,22 @@ public class Knight : Soldier
 
     public void Attack0()
     {
-        if (attackTargetTransform.TryGetComponent(out BaseHome opposedBaseHome))
+        Vector3 judgePos = transform.position + (transform.forward * 0.5f * soldierSO.attackRange);
+        float judgeRadius = soldierSO.attackRange;
+
+        Collider[] colliders = Physics.OverlapSphere(judgePos, judgeRadius);
+
+        List<IDamaged> damageSoldierList = new List<IDamaged>();
+
+        foreach (Collider collider in colliders)
         {
-            //目标是敌对基地
-            opposedBaseHome.Damaged(playerOwner, soldierSO.attackDamage);
-        }
-        else
-        {
-            Vector3 judgePos = transform.position + (transform.forward * 0.5f * soldierSO.attackRange);
-            float judgeRadius = soldierSO.attackRange;
-
-            Collider[] colliders = Physics.OverlapSphere(judgePos, judgeRadius);
-
-            List<Soldier> damageSoldierList = new List<Soldier>();
-
-            foreach (Collider collider in colliders)
+            if (collider.TryGetComponent<IDamaged>(out IDamaged damaged))
             {
-                if (collider.TryGetComponent<Soldier>(out Soldier soldier))
+                if (damaged.GetPlayerOwner() != playerOwner)
                 {
-                    if (soldier.GetPlayerOwner() != playerOwner)
-                    {
-                        if (damageSoldierList.Contains(soldier)) continue;
-                        damageSoldierList.Add(soldier);
-                        soldier.Damaged(playerOwner, soldierSO.attackDamage);
-                    }
+                    if (damageSoldierList.Contains(damaged)) continue;
+                    damageSoldierList.Add(damaged);
+                    damaged.Damaged(playerOwner, soldierSO.attackDamage);
                 }
             }
         }

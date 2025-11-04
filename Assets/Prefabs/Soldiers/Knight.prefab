@@ -256,7 +256,7 @@ PrefabInstance:
     - target: {fileID: 4202556905268136389, guid: ba288f2aa523a734cafc63b5ed2900d9,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2.015
+      value: 2.17
       objectReference: {fileID: 0}
     - target: {fileID: 4202556905268136389, guid: ba288f2aa523a734cafc63b5ed2900d9,
         type: 3}
@@ -277,6 +277,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SoldierHealthUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6333720241480652939, guid: ba288f2aa523a734cafc63b5ed2900d9,
+        type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

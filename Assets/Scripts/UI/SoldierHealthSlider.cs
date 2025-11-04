@@ -27,5 +27,6 @@ public class SoldierHealthSlider : HealthSlider
         {
             sliderFill.color = sliderColor_03;
         }
+
     }
 }

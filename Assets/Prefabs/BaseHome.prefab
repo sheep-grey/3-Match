@@ -146,6 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2358531955964678309}
   - component: {fileID: 5534494914450179443}
+  - component: {fileID: 4149268788969032326}
   m_Layer: 0
   m_Name: BaseHome
   m_TagString: Untagged
@@ -187,6 +188,27 @@ MonoBehaviour:
   playerOwner: 0
   soldierSpawnPos: {fileID: 7953556434242908877}
   healthSlider: {fileID: 8707827162575578894}
+--- !u!65 &4149268788969032326
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3389548937407460907}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5.712786, y: 1.1588054, z: 0.75689983}
+  m_Center: {x: -0.10602355, y: 0.55714154, z: 3.4399414}
 --- !u!1 &5625790975495478346
 GameObject:
   m_ObjectHideFlags: 0
