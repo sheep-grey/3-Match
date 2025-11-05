@@ -51,4 +51,9 @@ public class Player : MonoBehaviour
             mySoldierList.Add(soldier);
         }
     }
+
+    public void RemoveSoldierInList(Soldier soldier)
+    {
+
+    }
 }

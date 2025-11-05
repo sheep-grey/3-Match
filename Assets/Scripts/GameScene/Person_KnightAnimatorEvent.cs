@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KnightAnimatorEvent : MonoBehaviour
+public class Person_KnightAnimatorEvent : MonoBehaviour
 {
     [SerializeField] private Person_Knight knight;
     [SerializeField] private TrailRenderer trailRenderer;

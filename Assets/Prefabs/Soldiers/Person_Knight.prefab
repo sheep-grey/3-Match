@@ -79,7 +79,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.35
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.9, z: 0}
@@ -373,6 +373,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5431588277729915104, guid: adc5c9e90673d5d4da7b406bd81216f8,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5431588277729915104, guid: adc5c9e90673d5d4da7b406bd81216f8,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5431588277729915104, guid: adc5c9e90673d5d4da7b406bd81216f8,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.key0.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5431588277729915104, guid: adc5c9e90673d5d4da7b406bd81216f8,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.m_ColorSpace
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7491612191444756230, guid: adc5c9e90673d5d4da7b406bd81216f8,
         type: 3}

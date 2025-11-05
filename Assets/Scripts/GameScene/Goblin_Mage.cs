@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem.iOS;
 
-public class Person_Knight : Soldier
+public class Goblin_Mage : Soldier
 {
     private enum State
     {
@@ -21,6 +19,9 @@ public class Person_Knight : Soldier
     private const string ANIMATIR_DEAD = "Dead";
 
     private bool can_Attack0 = true;
+
+    [SerializeField] private Transform bulletShootPoint;
+    [SerializeField] private Transform Attack0_BulletPrefab;
 
     protected override void Awake()
     {
@@ -129,25 +130,6 @@ public class Person_Knight : Soldier
 
     public void Attack0()
     {
-        //Vector3 judgePos = transform.position + (transform.forward * 0.5f * soldierSO.attackRange);
-        //float judgeRadius = soldierSO.attackRange;
-
-        //Collider[] colliders = Physics.OverlapSphere(judgePos, judgeRadius);
-
-        //foreach (Collider collider in colliders)
-        //{
-        //    //ÅÅ³ý´¥·¢Æ÷
-        //    if (collider.isTrigger == true) continue;
-
-        //    if (collider.TryGetComponent<IDamaged>(out IDamaged damaged))
-        //    {
-        //        if (damaged.GetPlayerOwner() != playerOwner)
-        //        {
-        //            damaged.Damaged(playerOwner, soldierSO.attackDamage);
-        //        }
-        //    }
-        //}
-
         if (attackTargetTransform.IsDestroyed() || attackTargetTransform == null) return;
 
         if (attackTargetTransform.TryGetComponent(out Soldier soldier))
@@ -158,10 +140,10 @@ public class Person_Knight : Soldier
             }
         }
 
-        if (attackTargetTransform.TryGetComponent(out IDamaged damagedComponent))
-        {
-            damagedComponent.Damaged(playerOwner, soldierSO.attackDamage);
-        }
+        Transform bullet = Instantiate(Attack0_BulletPrefab);
+        bullet.transform.position = bulletShootPoint.position;
+
+        bullet.GetComponent<Goblin_Maga_Attack0_Bullet>().Initialize(playerOwner, soldierSO.attackDamage, attackTargetTransform);
     }
 
     protected override void Move()
