@@ -48,4 +48,23 @@ public class BaseHome : MonoBehaviour, IDamaged
     {
         healthSlider.UpdateVisual(baseHomeHealthNow, baseHomeHealthMax);
     }
+
+    public void SpawnSoldier(int index)
+    {
+        SoldierSO soldierSO = Player.Instance.GetSoldierSOInEquipSoldierList(index);
+
+        if (MatchManager.Instance.GetMoneyNumNow() < soldierSO.spendMoney || MatchManager.Instance.GetTechnologyPointNumNow() < soldierSO.spendTechnologyPoint) return;
+
+        MatchManager.Instance.SpendMoney(soldierSO.spendMoney);
+        MatchManager.Instance.SpendTechnologyPointNow(soldierSO.spendTechnologyPoint);
+
+        Transform soldierTransform = Instantiate(soldierSO.prefab);
+
+        Soldier soldier = soldierTransform.GetComponent<Soldier>();
+
+        soldier.SetPlayerOwner(playerOwner);
+
+        soldierTransform.position = FightManager.Instance.GetSelfBaseHome(playerOwner).GetSoldierSpawnPos().position;
+        soldierTransform.rotation = FightManager.Instance.GetSelfBaseHome(playerOwner).GetSoldierSpawnPos().rotation;
+    }
 }

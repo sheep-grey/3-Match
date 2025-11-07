@@ -146,7 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2358531955964678309}
   - component: {fileID: 5534494914450179443}
-  - component: {fileID: 4149268788969032326}
+  - component: {fileID: 3578116243097589091}
   m_Layer: 0
   m_Name: BaseHome
   m_TagString: Untagged
@@ -188,7 +188,7 @@ MonoBehaviour:
   playerOwner: 0
   soldierSpawnPos: {fileID: 7953556434242908877}
   healthSlider: {fileID: 8707827162575578894}
---- !u!65 &4149268788969032326
+--- !u!65 &3578116243097589091
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

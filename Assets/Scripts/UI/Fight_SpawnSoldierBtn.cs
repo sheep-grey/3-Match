@@ -6,25 +6,11 @@ using UnityEngine.UI;
 
 public class Fight_SpawnSoldierBtn : MonoBehaviour
 {
-    [SerializeField] private SoldierSO soldierSO;
-
     [SerializeField] private Button button;
     [SerializeField] private TextMeshProUGUI text;
 
-    private void Start()
+    public void UpdateVisual(string text)
     {
-        button.onClick.AddListener(OnButtonClick);
-
-        UpdateVisual();
-    }
-
-    private void OnButtonClick()
-    {
-        Player.Instance.SpawnSoldier(soldierSO);
-    }
-
-    private void UpdateVisual()
-    {
-        text.text = soldierSO.soldierName;
+        this.text.text = text;
     }
 }

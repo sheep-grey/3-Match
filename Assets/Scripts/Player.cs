@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField] private PlayerOwner playerOwner;
+    [SerializeField] private SoldierSOList myEquipSoldierList;
 
     private List<Soldier> mySoldierList;
 
@@ -25,23 +27,14 @@ public class Player : MonoBehaviour
         return playerOwner;
     }
 
-    public void SpawnSoldier(SoldierSO soldierSO)
+    public void SpawnSoldier(int index)
     {
-        if (MatchManager.Instance.GetMoneyNumNow() < soldierSO.spendMoney || MatchManager.Instance.GetTechnologyPointNumNow() < soldierSO.spendTechnologyPoint) return;
+        FightManager.Instance.GetSelfBaseHome(playerOwner).SpawnSoldier(index);
+    }
 
-        MatchManager.Instance.SpendMoney(soldierSO.spendMoney);
-        MatchManager.Instance.SpendTechnologyPointNow(soldierSO.spendTechnologyPoint);
-
-        Transform soldierTransform = Instantiate(soldierSO.prefab);
-
-        Soldier soldier = soldierTransform.GetComponent<Soldier>();
-
-        soldier.SetPlayerOwner(playerOwner);
-
-        soldierTransform.position = FightManager.Instance.GetSelfBaseHome(playerOwner).GetSoldierSpawnPos().position;
-        soldierTransform.rotation = FightManager.Instance.GetSelfBaseHome(playerOwner).GetSoldierSpawnPos().rotation;
-
-        mySoldierList.Add(soldier);
+    public SoldierSO GetSoldierSOInEquipSoldierList(int index)
+    {
+        return myEquipSoldierList.soldierSOList[index];
     }
 
     public void AddSoldierInList(Soldier soldier)
