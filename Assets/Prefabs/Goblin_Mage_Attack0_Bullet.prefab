@@ -112,7 +112,7 @@ Transform:
   m_GameObject: {fileID: 9063129824037292373}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.334}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -149,10 +149,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 9063129824037292373}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4cdb529de7e0f44dabe1caf01688cd7, type: 3}
+  m_Script: {fileID: 11500000, guid: a74bfe22d77b0d5459cb92c9ddb66c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 7
 --- !u!96 &8357751816191259949
 TrailRenderer:
   serializedVersion: 3

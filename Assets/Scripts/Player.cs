@@ -47,6 +47,6 @@ public class Player : MonoBehaviour
 
     public void RemoveSoldierInList(Soldier soldier)
     {
-
+        mySoldierList.Remove(soldier);
     }
 }

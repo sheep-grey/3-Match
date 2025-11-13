@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Goblin_Mage : Soldier
+public class Goblin_Mage : RemoteSolider
 {
     private enum State
     {
@@ -20,15 +20,13 @@ public class Goblin_Mage : Soldier
 
     private bool can_Attack0 = true;
 
-    [SerializeField] private Transform bulletShootPoint;
-    [SerializeField] private Transform Attack0_BulletPrefab;
-
     protected override void Awake()
     {
         base.Awake();
 
         state = State.Move;
     }
+
 
     private void OnTriggerStay(Collider other)
     {
@@ -143,7 +141,7 @@ public class Goblin_Mage : Soldier
         Transform bullet = Instantiate(Attack0_BulletPrefab);
         bullet.transform.position = bulletShootPoint.position;
 
-        bullet.GetComponent<Goblin_Maga_Attack0_Bullet>().Initialize(playerOwner, soldierSO.attackDamage, attackTargetTransform);
+        bullet.GetComponent<SoliderBullet>().Initialize(playerOwner, soldierSO.attackDamage, attackTargetTransform);
     }
 
     protected override void Move()
