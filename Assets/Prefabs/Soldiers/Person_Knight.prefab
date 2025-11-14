@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3137054020910783915}
+  - component: {fileID: 4809773380303862392}
   - component: {fileID: 6930504923160220764}
   - component: {fileID: 4423083114061089913}
   - component: {fileID: 341845572710361322}
   - component: {fileID: 5402380765680272911}
-  - component: {fileID: 4809773380303862392}
   m_Layer: 0
   m_Name: Person_Knight
   m_TagString: Untagged
@@ -38,6 +38,25 @@ Transform:
   - {fileID: 4406880358884990573}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4809773380303862392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6133682527845667898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f79e1eacc4559fc4e9fbe7310479e0fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soldierSO: {fileID: 11400000, guid: 739432bf9e8be1041940e4d387a3c2b1, type: 2}
+  navMeshAgent: {fileID: 6930504923160220764}
+  animator: {fileID: 2986334340189160803}
+  soldierBodyCollider: {fileID: 4423083114061089913}
+  viewRangeCollider: {fileID: 5402380765680272911}
+  playerOwner: 0
+  soldierHealthSlider: {fileID: 7756022607810616909}
 --- !u!195 &6930504923160220764
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -131,25 +150,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 2
   m_Center: {x: 0, y: 0.9, z: 0}
---- !u!114 &4809773380303862392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6133682527845667898}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f79e1eacc4559fc4e9fbe7310479e0fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soldierSO: {fileID: 11400000, guid: 739432bf9e8be1041940e4d387a3c2b1, type: 2}
-  navMeshAgent: {fileID: 6930504923160220764}
-  animator: {fileID: 2986334340189160803}
-  soldierBodyCollider: {fileID: 4423083114061089913}
-  viewRangeCollider: {fileID: 5402380765680272911}
-  playerOwner: 0
-  soldierHealthSlider: {fileID: 7756022607810616909}
 --- !u!1001 &538771053986650024
 PrefabInstance:
   m_ObjectHideFlags: 0
